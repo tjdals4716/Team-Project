@@ -27,7 +27,7 @@ public class UserDto {
     private String age; //연령대
     private String mbti; //mbti
     private Long popular_point; //대중성 포인트
-    private String role;
+    private String roles;
 
     public static UserDto entityToDto(UserEntity userEntity) { // public static = 정적 메소드로 객체 생성 없이 호출 가능한 메소드
         return new UserDto(
@@ -44,6 +44,6 @@ public class UserDto {
     }
 
     public UserEntity dtoToEntity(){
-        return new UserEntity(id,email,password,nickname,gender,age,mbti,popular_point, Collections.singletonList(role));
+        return new UserEntity(id,email,password,nickname,gender,age,mbti,popular_point, Collections.singletonList(roles));
     }
 }

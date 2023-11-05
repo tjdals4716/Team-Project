@@ -1,5 +1,6 @@
 package com.example.SignServer.Controller;
 
+import com.example.SignServer.Dto.TokenDto;
 import com.example.SignServer.Dto.UserDto;
 import com.example.SignServer.Service.SignService;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
+@RequestMapping("/auth")
 public class SignController {
     private final SignService signService;
 
@@ -23,6 +25,13 @@ public class SignController {
     public ResponseEntity<UserDto> SignUp(@RequestBody UserDto userDto){
         UserDto createUser = signService.SignUp(userDto);
         return ResponseEntity.status(HttpStatus.OK).body(createUser);
+    }
+
+    @PostMapping("/signin") //로그인
+    public ResponseEntity<TokenDto> SignIn(@RequestBody UserDto userDto){
+        TokenDto login = signService.SignIn(userDto);
+        return ResponseEntity.status(HttpStatus.OK).body(login);
+        
     }
 
     @GetMapping() //모든 User 정보 조회
