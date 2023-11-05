@@ -3,6 +3,8 @@ package com.example.SignServer.Dto;
 import com.example.SignServer.Entity.UserEntity;
 import lombok.*;
 
+import java.util.Collections;
+
 //import javax.validation.constraints.NotEmpty;
 
 @Data
@@ -25,6 +27,7 @@ public class UserDto {
     private String age; //연령대
     private String mbti; //mbti
     private Long popular_point; //대중성 포인트
+    private String role;
 
     public static UserDto entityToDto(UserEntity userEntity) { // public static = 정적 메소드로 객체 생성 없이 호출 가능한 메소드
         return new UserDto(
@@ -35,11 +38,12 @@ public class UserDto {
                 userEntity.getGender(),
                 userEntity.getAge(),
                 userEntity.getMbti(),
-                userEntity.getPopular_point()
+                userEntity.getPopular_point(),
+                userEntity.getRoles().toString()
         );
     }
 
     public UserEntity dtoToEntity(){
-        return new UserEntity(id,email,password,nickname,gender,age,mbti,popular_point);
+        return new UserEntity(id,email,password,nickname,gender,age,mbti,popular_point, Collections.singletonList(role));
     }
 }
