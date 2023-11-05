@@ -5,6 +5,7 @@ import com.example.SignServer.Repository.UserRepository;
 import com.example.SignServer.Entity.UserEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,17 +15,20 @@ import java.util.stream.Collectors;
 @Slf4j
 public class SignServiceImpl implements SignService{
     private final UserRepository userRepository;
-//    private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private final PasswordEncoder passwordEncoder;
 
-    public SignServiceImpl(@Autowired UserRepository userRepository
-                           ){ //의존성 주입
+    public SignServiceImpl(@Autowired UserRepository userRepository,
+                           PasswordEncoder passwordEncoder){ //의존성 주입
         this.userRepository = userRepository;
-
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public UserDto SignUp(UserDto userDto) {
         UserEntity userEntity = userDto.dtoToEntity();
+        String encodedPassword = passwordEncoder.encode(userEntity.getPassword());
+        userEntity.setPassword(encodedPassword);
         userRepository.save(userEntity);
         log.info("회원가입 완료! " + userEntity);
         return UserDto.entityToDto(userEntity);

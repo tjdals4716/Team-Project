@@ -10,6 +10,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @ToString
 @Getter
+@Setter
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 회원번호 자동생성

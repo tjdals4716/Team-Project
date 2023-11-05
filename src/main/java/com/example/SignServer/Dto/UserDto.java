@@ -1,20 +1,26 @@
 package com.example.SignServer.Dto;
 
 import com.example.SignServer.Entity.UserEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
+//import javax.validation.constraints.NotEmpty;
+
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @Getter
 public class UserDto {
     private Long id; //회원번호
+//    @NotEmpty(message = "Enter your email")
     private String email; //이메일
+//    @NotEmpty(message = "Enter your password")
     private String password; //비밀번호
+//    @NotEmpty(message = "Confirm your password")
+//    private String confirmPassword;
+//    @NotEmpty(message = "Enter your nickname")
     private String nickname; //닉네임
+
     private String gender; //성별
     private String age; //연령대
     private String mbti; //mbti
