@@ -10,5 +10,5 @@ import lombok.*;
 public class TokenDto {
     private String token;
     private String email;
-    private String role;
+    private String roles;
 }

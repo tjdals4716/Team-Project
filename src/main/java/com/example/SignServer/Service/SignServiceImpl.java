@@ -55,7 +55,7 @@ public class SignServiceImpl implements SignService{
                 .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 email 입니다."));
         TokenDto tokenDto = new TokenDto();
         tokenDto.setEmail(userDto.getEmail());
-        tokenDto.setRole(userDto.getRoles());
+        tokenDto.setRoles((userEntity.getRoles().toString())); // userdto에서 받아와야 하는데 널값이 떠 entity로 변경
         if(!passwordEncoder.matches(userDto.getPassword(),userEntity.getPassword())) {
             throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
         }
