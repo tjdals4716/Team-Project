@@ -34,9 +34,11 @@ public class SignServiceImpl implements SignService{
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
-//    public boolean CheckEmailDuplicate(String email){
-//        return UserRepository.existsByEmail(email);
-//    }
+    // email 중복 검사
+    public boolean CheckEmailDuplicate(String email){
+        return userRepository.existsByEmail(email);
+    }
+
     @Override
     public UserDto SignUp(UserDto userDto) {
         UserEntity userEntity = userDto.dtoToEntity();
