@@ -3,6 +3,7 @@ package com.example.SignServer.Entity;
 import com.example.SignServer.Dto.UserDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,6 +34,7 @@ public class UserEntity implements UserDetails {
     private String gender; //성별
     private String age; //연령대
     private String mbti; //mbti
+    @ColumnDefault("0")
     private Long popular_point; //대중성 포인트
 
     @ElementCollection(fetch = FetchType.EAGER)
