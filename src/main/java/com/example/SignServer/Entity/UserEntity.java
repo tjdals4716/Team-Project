@@ -1,6 +1,7 @@
 package com.example.SignServer.Entity;
 
 import com.example.SignServer.Dto.UserDto;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,12 +20,14 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @Builder
+// Spring Security는 UserDetails 객체를 통해 권한 정보를 관리. UserEntity 에  UserDetails 구현
 public class UserEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 회원번호 자동생성
     private Long id; //회원번호
 
     private String email; //이메일
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // JSON 결과로 출력하지 않을 데이터
     private String password; //비밀번호
     private String nickname; //닉네임
     private String gender; //성별

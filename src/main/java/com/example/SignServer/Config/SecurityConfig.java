@@ -33,7 +33,8 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception { //인증되지 않은 모든 유저 접근 허용
         http
-                // csrf disable 처리
+                //https를 사용하기 위해 httpbasic disable
+                .httpBasic().disable()
                 .csrf().disable()
                 // 토큰 기반 인증이므로 세션도 사용하지 않는다.
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
