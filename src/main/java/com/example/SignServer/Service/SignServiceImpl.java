@@ -60,6 +60,7 @@ public class SignServiceImpl implements SignService{
             throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
         }
         tokenDto.setToken(jwtTokenProvider.createToken(userEntity.getUsername(),userEntity.getRoles()));
+        logger.info("로그인 성공!");
         return tokenDto;
 
     }
