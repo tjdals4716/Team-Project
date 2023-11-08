@@ -15,15 +15,15 @@ import java.util.Collections;
 @Getter
 public class UserDto {
     private Long id; //회원번호. 자동생성
-    @NotEmpty(message = "아이디를 입력하세요")
+    @NotBlank(message = "아이디를 입력하세요")
     private String uid; //아이디
-    @NotEmpty(message = "비밀번호를 입력하세요")
+    @NotBlank(message = "비밀번호를 입력하세요")
     private String password; //비밀번호
 //  private String confirmPassword;
-    @NotEmpty(message = "닉네임을 입력하세요")
+    @NotBlank(message = "닉네임을 입력하세요")
     @Size(min = 2,max = 10, message = "닉네임은 2자 이상 10자 이하로 입력해주세요")
     private String nickname; //닉네임
-    @NotEmpty(message = "성별을 선택해주세요")
+    @NotBlank(message = "성별을 선택해주세요")
     private String gender; //성별
     private String age; //연령대
     private String mbti; //mbti

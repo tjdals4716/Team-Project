@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -22,7 +23,7 @@ public class SignController {
     }
 
     @PostMapping("/signup") //회원가입
-    public ResponseEntity<UserDto> SignUp(@RequestBody UserDto userDto){
+    public ResponseEntity<UserDto> SignUp(@RequestBody @Valid UserDto userDto){
         UserDto createUser = signService.SignUp(userDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createUser);
     }
