@@ -3,9 +3,9 @@ package com.example.SignServer.Dto;
 import com.example.SignServer.Entity.UserEntity;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Collections;
-
-//import javax.validation.constraints.NotEmpty;
 
 @Data
 @NoArgsConstructor
@@ -13,16 +13,16 @@ import java.util.Collections;
 @ToString
 @Getter
 public class UserDto {
-    private Long id; //회원번호
-//    @NotEmpty(message = "Enter your email")
-    private String email; //이메일
-//    @NotEmpty(message = "Enter your password")
+    private Long id; //회원번호. 자동생성
+    @NotBlank(message = "아이디를 입력하세요")
+    private String uid; //아이디
+    @NotBlank(message = "비밀번호를 입력하세요")
     private String password; //비밀번호
-//    @NotEmpty(message = "Confirm your password")
-//    private String confirmPassword;
-//    @NotEmpty(message = "Enter your nickname")
+//  private String confirmPassword;
+    @NotBlank(message = "닉네임을 입력하세요")
+    @Size(min = 2,max = 10, message = "닉네임은 2자 이상 10자 이하로 입력해주세요")
     private String nickname; //닉네임
-
+    @NotBlank(message = "성별을 선택해주세요")
     private String gender; //성별
     private String age; //연령대
     private String mbti; //mbti
@@ -32,7 +32,7 @@ public class UserDto {
     public static UserDto entityToDto(UserEntity userEntity) { // public static = 정적 메소드로 객체 생성 없이 호출 가능한 메소드
         return new UserDto(
                 userEntity.getId(),
-                userEntity.getEmail(),
+                userEntity.getUid(),
                 userEntity.getPassword(),
                 userEntity.getNickname(),
                 userEntity.getGender(),
@@ -44,6 +44,6 @@ public class UserDto {
     }
 
     public UserEntity dtoToEntity(){
-        return new UserEntity(id,email,password,nickname,gender,age,mbti,popular_point, Collections.singletonList(roles));
+        return new UserEntity(id,uid,password,nickname,gender,age,mbti,popular_point, Collections.singletonList(roles));
     }
 }

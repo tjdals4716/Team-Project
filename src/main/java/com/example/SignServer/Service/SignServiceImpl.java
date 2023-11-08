@@ -34,13 +34,20 @@ public class SignServiceImpl implements SignService{
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
-    // email 중복 검사
-    public boolean CheckEmailDuplicate(String email){
-        return userRepository.existsByEmail(email);
+    // 아이디 중복 검사. 중복되는 경우 true
+    public boolean CheckEmailDuplicate(String uid){
+        return userRepository.existsByUid(uid);
     }
+    // nickname 중복 검사.
+    public boolean CheckNicknameDuplicate(String nickname){return userRepository.existsByNickname(nickname);}
 
     @Override
     public UserDto SignUp(UserDto userDto) {
+        if(CheckEmailDuplicate(userDto.getUid()))
+            throw new IllegalArgumentException("중복된 아이디가 존재합니다.");
+        else if (CheckNicknameDuplicate(userDto.getNickname())) {
+            throw new IllegalArgumentException("닉네임이 이미 존재합니다.");
+        }
         UserEntity userEntity = userDto.dtoToEntity();
         userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
         userEntity.setRoles(Collections.singletonList("ROLE_USER"));
@@ -51,10 +58,10 @@ public class SignServiceImpl implements SignService{
 
     public TokenDto SignIn(UserDto userDto){
 
-        UserEntity userEntity = userRepository.getByEmail(userDto.getEmail())
+        UserEntity userEntity = userRepository.getByUid(userDto.getUid())
                 .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 email 입니다."));
         TokenDto tokenDto = new TokenDto();
-        tokenDto.setEmail(userDto.getEmail());
+        tokenDto.setEmail(userDto.getUid());
         tokenDto.setRoles((userEntity.getRoles().toString())); // userdto에서 받아와야 하는데 널값이 떠 entity로 변경
         if(!passwordEncoder.matches(userDto.getPassword(),userEntity.getPassword())) {
             throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
@@ -69,7 +76,7 @@ public class SignServiceImpl implements SignService{
     public List<UserDto> ReadAllUser() {
         return userRepository.findAll()
                 .stream()
-                .map(userEntity -> UserDto.entityToDto(userEntity))
+                .map(UserDto::entityToDto)
                 .collect(Collectors.toList());
     }
 

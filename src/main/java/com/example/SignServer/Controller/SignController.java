@@ -31,7 +31,6 @@ public class SignController {
     public ResponseEntity<TokenDto> SignIn(@RequestBody UserDto userDto){
         TokenDto login = signService.SignIn(userDto);
         return ResponseEntity.status(HttpStatus.OK).body(login);
-        
     }
 
     @GetMapping() //모든 User 정보 조회

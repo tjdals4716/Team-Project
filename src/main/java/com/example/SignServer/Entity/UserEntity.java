@@ -27,7 +27,7 @@ public class UserEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 회원번호 자동생성
     private Long id; //회원번호
 
-    private String email; //이메일
+    private String uid; //아이디
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // JSON 결과로 출력하지 않을 데이터
     private String password; //비밀번호
     private String nickname; //닉네임
@@ -62,7 +62,7 @@ public class UserEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return uid;
     }
 
     @Override

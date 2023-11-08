@@ -28,11 +28,9 @@ public class JwtTokenProvider {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
     private final UserDetailsService userDetailsService;
+
     @Value("${jwt.token.key}") //properties의 secret key를 가져온다.
     private String secretkey;
-
-    //토큰의 유효시간을 1시간으로 설정
-    private final long tokenValidTime = 60 * 60 * 1000L;
 
     // secretkey를 Base64로 인코딩
     // @PostConstruct는 빈이 생성되면 자동으로 실행되게 하는 어노테이션, 초기화에 사용.
@@ -51,6 +49,9 @@ public class JwtTokenProvider {
         claims.put("roles",roles);
         Date now = new Date();
 
+        //토큰의 유효시간을 1시간으로 설정
+        long tokenValidTime = 60 * 60 * 1000L;
+
         return Jwts.builder()
 
                 .setClaims(claims)
@@ -67,13 +68,13 @@ public class JwtTokenProvider {
     @Transactional
     public Authentication getAuthentication(String token){
         logger.info("JwtTokenProvider : 토큰 인증 정보 조회를 시작합니다.(getAuthentication)");
-        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserEmail(token));
+        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserUid(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "",userDetails.getAuthorities());
     }
 
     // Token에서 회원 정보 추출
-    public String getUserEmail(String token){
-        logger.info("JwtTokenProvider : 토큰에서 회원 정보를 추출합니다.(getUserEmail)");
+    public String getUserUid(String token){
+        logger.info("JwtTokenProvider : 토큰에서 회원 정보를 추출합니다.(getUserUid)");
         return Jwts.parser().setSigningKey(secretkey).parseClaimsJws(token).getBody().getSubject();
     }
 
