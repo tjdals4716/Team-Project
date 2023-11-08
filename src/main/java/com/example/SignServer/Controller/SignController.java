@@ -24,13 +24,13 @@ public class SignController {
     @PostMapping("/signup") //회원가입
     public ResponseEntity<UserDto> SignUp(@RequestBody UserDto userDto){
         UserDto createUser = signService.SignUp(userDto);
-        return ResponseEntity.status(HttpStatus.OK).body(createUser);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createUser);
     }
 
     @PostMapping("/signin") //로그인
     public ResponseEntity<TokenDto> SignIn(@RequestBody UserDto userDto){
         TokenDto login = signService.SignIn(userDto);
-        return ResponseEntity.status(HttpStatus.OK).body(login);
+        return ResponseEntity.status(HttpStatus.CREATED).body(login);
     }
 
     @GetMapping() //모든 User 정보 조회
